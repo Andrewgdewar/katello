@@ -14,6 +14,7 @@ import { getPageStats } from './helpers';
 import Search from '../../components/Search';
 import SelectAllCheckbox from '../SelectAllCheckbox';
 import { orgId } from '../../services/api';
+import Bookmark from './Bookmark/Bookmark';
 
 /* Patternfly 4 table wrapper */
 const TableWrapper = ({
@@ -37,6 +38,7 @@ const TableWrapper = ({
   emptySearchBody,
   disableSearch,
   nodesBelowSearch,
+  bookmarkController,
   ...allTableProps
 }) => {
   const dispatch = useDispatch();
@@ -144,13 +146,13 @@ const TableWrapper = ({
           <FlexItem alignSelf={{ default: 'alignSelfCenter' }}>
             <SelectAllCheckbox
               {...{
-                      selectAll,
-                      selectPage,
-                      selectNone,
-                      selectedCount,
-                      pageRowCount,
-                    }
-                }
+                selectAll,
+                selectPage,
+                selectNone,
+                selectedCount,
+                pageRowCount,
+              }
+              }
               totalCount={total}
               areAllRowsOnPageSelected={areAllRowsOnPageSelected()}
               areAllRowsSelected={areAllRowsSelected()}
@@ -166,6 +168,8 @@ const TableWrapper = ({
               getAutoCompleteParams={getAutoCompleteParams}
               foremanApiAutoComplete={foremanApiAutoComplete}
             />
+            {bookmarkController &&
+              <Bookmark controller={bookmarkController} />}
           </FlexItem>
         }
         {showActionButtons &&
@@ -248,6 +252,7 @@ TableWrapper.propTypes = {
   emptySearchBody: PropTypes.string,
   disableSearch: PropTypes.bool,
   nodesBelowSearch: PropTypes.node,
+  bookmarkController: PropTypes.string,
 };
 
 TableWrapper.defaultProps = {
@@ -267,6 +272,7 @@ TableWrapper.defaultProps = {
   emptySearchBody: __('Try changing your search settings.'),
   disableSearch: false,
   nodesBelowSearch: null,
+  bookmarkController: undefined,
 };
 
 export default TableWrapper;
